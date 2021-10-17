@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans:beans xmlns="http://www.springframework.org/schema/security"
+	xmlns:beans="http://www.springframework.org/schema/beans" 
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+	http://www.springframework.org/schema/beans/spring-beans.xsd
+	http://www.springframework.org/schema/security
+	http://www.springframework.org/schema/security/spring-security.xsd">
+	<http>
+		<headers>
+			<frame-options policy="ALLOW-FROM" strategy="static" value="localhost" />
+		</headers>
+		<csrf disabled="true"/>
+		<intercept-url pattern="/login" access="permitAll"/>
+		<intercept-url pattern="/resources/scripts/login.js" access="permitAll"/>
+		<intercept-url pattern="/resources/images/mail.ico" access="permitAll"/>
+		<!-- <intercept-url pattern="/**" access="permitAll()"/> -->
+		<intercept-url pattern="/resources/**" access="isFullyAuthenticated()" />
+		<intercept-url pattern="/home" access="isFullyAuthenticated()" />
+		<intercept-url pattern="/homePage/search" access="isFullyAuthenticated()" />
+		
+		<!-- Data Entry (Start) -->
+		<intercept-url pattern="/policeRecord/**" access="hasAnyRole('ADMIN', 'DATA_ENTRY')" />
+		<!-- Data Entry (Finish) -->
+		
+		<!-- Lawyer (Start) -->
+		<intercept-url pattern="/searchPoliceRecord/**" access="hasAnyRole('ADMIN', 'LAWYER')" />
+		<intercept-url pattern="/reports/**" access="hasAnyRole('ADMIN', 'LAWYER')" />
+		<!-- Lawyer (Start) -->
+		
+		<intercept-url  pattern="/**" access="hasRole('ADMIN')" />
+		
+		<form-login 
+		   login-page="/login" 
+		   login-processing-url="/loginApp"
+		   username-parameter="username"
+		   password-parameter="password"
+		   default-target-url="/home"/>
+		<logout 
+		   logout-url="/logout" 
+		   logout-success-url="/login"/>  
+		<access-denied-handler error-page="/unauthorized"/>
+	</http>
+	
+	<beans:bean class="com.sys.adv.service.UserDetailsServiceImp" id="userDetailsService">
+		<beans:constructor-arg>
+			<beans:bean class="com.sys.adv.model.dao.UserDetailsDao"></beans:bean>
+		</beans:constructor-arg>
+	</beans:bean>
+	
+	<authentication-manager>
+		<authentication-provider user-service-ref="userDetailsService">
+			<password-encoder hash="bcrypt" />
+		</authentication-provider>
+	</authentication-manager>
+</beans:beans> 

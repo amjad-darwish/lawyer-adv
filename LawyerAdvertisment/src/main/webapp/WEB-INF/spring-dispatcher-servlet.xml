@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:mvc="http://www.springframework.org/schema/mvc"
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans 
+       					   http://www.springframework.org/schema/beans/spring-beans-4.3.xsd 
+       					   http://www.springframework.org/schema/context
+       					   http://www.springframework.org/schema/context/spring-context-4.3.xsd 
+       					   http://www.springframework.org/schema/mvc 
+       					   http://www.springframework.org/schema/mvc/spring-mvc-4.3.xsd
+       					   http://www.springframework.org/schema/tx
+       					   http://www.springframework.org/schema/tx/spring-tx-4.3.xsd">
+	<context:component-scan
+		base-package="com.sys.adv.controller"></context:component-scan>
+	<context:component-scan
+		base-package="com.sys.adv.interceptor"></context:component-scan>
+	<context:component-scan
+		base-package="com.sys.adv.model.dao"></context:component-scan>
+	<context:component-scan
+		base-package="com.sys.adv.converter"></context:component-scan>
+	<context:component-scan
+		base-package="com.sys.adv.initializers"></context:component-scan>
+
+	<bean id="multipartResolver"
+		class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+	</bean>
+
+	<bean id="conversionService"
+		class="org.springframework.context.support.ConversionServiceFactoryBean">
+		<property name="converters">
+			<set>
+				<bean class="com.sys.adv.converter.IdToCityConverter" />
+				<bean class="com.sys.adv.converter.IdToStateConverter" />
+				<bean class="com.sys.adv.converter.IdToLawyerConverter" />
+				<bean class="com.sys.adv.converter.IdToZipCodeInfoConverter" />
+				<bean class="com.sys.adv.converter.StringToCalendarConverter" />
+			</set>
+		</property>
+	</bean>
+
+	<!-- <bean class="org.springframework.beans.factory.config.CustomEditorConfigurer"> 
+		<property name="customEditors"> <map> <entry key="java.util.Calendar" value="com.sys.adv.converter.StringToCalendarConverter"/> 
+		</map> </property> </bean> -->
+
+	<bean id="sessionFactory"
+		class="org.springframework.orm.hibernate5.LocalSessionFactoryBean">
+		<!-- <property name="dataSource" ref="dataSource"></property> -->
+		<property name="packagesToScan"
+			value="com.sys.adv.model.beans"></property>
+		<property name="configLocations"
+			value="classpath:hibernate.cfg.xml"></property>
+	</bean>
+
+	<bean id="transactionManager"
+		class="org.springframework.orm.hibernate5.HibernateTransactionManager">
+		<property name="sessionFactory" ref="sessionFactory" />
+		<!-- <property name="dataSource" ref="dataSource" /> -->
+	</bean>
+
+	<mvc:interceptors>
+		<mvc:interceptor>
+			<mvc:mapping path="/**" />
+			<bean class="com.sys.adv.interceptor.PaginationInterceptor"></bean>
+		</mvc:interceptor>
+	</mvc:interceptors>
+
+	<bean
+		class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+		<property name="prefix">
+			<value>/WEB-INF/pages/jsps/</value>
+		</property>
+		<property name="suffix">
+			<value>.jsp</value>
+		</property>
+	</bean>
+
+	<mvc:resources mapping="/resources/**"
+		location="/resources/" />
+
+	<mvc:annotation-driven
+		conversion-service="conversionService" />
+	<tx:annotation-driven
+		transaction-manager="transactionManager" />
+
+	<import resource="security-config.xml" />
+</beans>

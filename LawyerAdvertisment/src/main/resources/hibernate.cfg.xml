@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-configuration PUBLIC
+        "-//Hibernate/Hibernate Configuration DTD 3.0//EN"
+        "http://www.hibernate.org/dtd/hibernate-configuration-3.0.dtd">
+
+<hibernate-configuration>
+	<session-factory>
+		<property name="hibernate.connection.provider_class">org.hibernate.c3p0.internal.C3P0ConnectionProvider</property>
+		<property name="hibernate.connection.driver_class">com.mysql.jdbc.Driver</property>
+		<property name="hibernate.connection.url">jdbc:mysql://127.0.0.1:3306/LAWYER_ADV</property>
+		<property name="hibernate.connection.password">LAWYER_ADV</property>
+		<property name="hibernate.connection.username">LAWYER_ADV</property>
+		<property name="hibernate.dialect">org.hibernate.dialect.MySQL5Dialect</property>
+
+		<property name="hibernate.current_session_context_class">org.springframework.orm.hibernate5.SpringSessionContext</property>
+		<property name="hibernate.show_sql">true</property>
+		<!-- <property name="hibernate.transaction.flush_before_completion">true</property> -->
+		<!-- <property name="hibernate.transaction.auto_close_session">true</property> -->
+		<property name="hibernate.hbm2ddl.auto">none</property>
+
+		<!-- C3P0 properties -->
+		<property name="hibernate.c3p0.min_size">1</property>
+		<property name="hibernate.c3p0.max_size">5</property>
+		<property name="hibernate.c3p0.acquire_increment">1</property>
+		<property name="hibernate.c3p0.acquireRetryAttempts">3</property>
+		<property name="hibernate.c3p0.acquireRetryDelay">3000</property>
+		<property name="hibernate.c3p0.breakAfterAcquireFailure">false</property>
+		<property name="hibernate.c3p0.maxConnectionAge">60</property>
+		<!-- <property name="hibernate.c3p0.maxIdleTime">30</property> -->
+		<property name="hibernate.c3p0.maxIdleTimeExcessConnections">10</property>
+		<property name="hibernate.c3p0.idleConnectionTestPeriod">15</property>
+		<property name="hibernate.c3p0.testConnectionOnCheckout">true</property>
+		<property name="hibernate.c3p0.preferredTestQuery">SELECT 1</property>
+		<property name="hibernate.c3p0.timeout">180</property>
+		<property name="hibernate.c3p0.max_statements">50</property>
+		<property name="hibernate.c3p0.debugUnreturnedConnectionStackTraces">true</property>
+		<property name="hibernate.c3p0.autoCommitOnClose">true</property>
+	</session-factory>
+</hibernate-configuration>
+
+<!-- <bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource"> 
+	<property name="driverClassName" value="com.mysql.jdbc.Driver"/> <property 
+	name="url" value="jdbc:mysql://localhost:3306/LAWYER_ADV"/> <property name="username" 
+	value="LAWYER_ADV"/> <property name="password" value="LAWYER_ADV"/> </bean> 
+	<bean id="dataSource" class="org.springframework.jndi.JndiObjectFactoryBean"> 
+	<property name="jndiName" value="java:comp/env/jdbc/lawyerAdv"/> </bean> -->

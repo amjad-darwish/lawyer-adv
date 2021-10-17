@@ -1,0 +1,85 @@
+@CHARSET "UTF-8";
+
+/* td {
+	font-size: smaller;
+}
+
+th {
+	font-size: smaller;
+}
+
+form#linksForm a {
+    font-size: smaller;
+}
+
+span.small {
+	font-size: smaller;
+} */
+
+div#parent {
+	padding-bottom: 20px;
+}
+
+form#searchForm {
+	padding-bottom: 20px;
+}
+
+thead {
+	text-align: left;
+	/* font-size: small; */
+	border-bottom: 1pt solid rgb(0, 0, 0);
+}
+
+table {
+	border-collapse: collapse;
+}
+
+input.button-delete {
+    background-image: url(../images/delete.png); /* 16px x 16px */
+    background-color: transparent; /* make the button transparent */
+    background-repeat: no-repeat;  /* make the background image appear only once */
+    background-position: 0px 0px;  /* equivalent to 'top left' */
+    border: none;           /* assuming we don't want any borders */
+    cursor: pointer;        /* make the cursor like hovering over an <a> element */
+   /*  height: 16px;           make this the size of your image
+    padding-left: 16px;     make text start to the right of the image */
+    vertical-align: middle; /* align the text vertically centered */
+    width: 25px;
+    text-indent: -9999999px;
+}
+
+input.button-pdf {
+    background-image: url(../images/pdf.png); /* 16px x 16px */
+    background-color: transparent; /* make the button transparent */
+    background-repeat: no-repeat;  /* make the background image appear only once */
+    background-position: 0px 0px;  /* equivalent to 'top left' */
+    border: none;           /* assuming we don't want any borders */
+    cursor: pointer;        /* make the cursor like hovering over an <a> element */
+   /*  height: 16px;           make this the size of your image
+    padding-left: 16px;     make text start to the right of the image */
+    vertical-align: middle; /* align the text vertically centered */
+    width: 25px;
+    height:25px;
+    text-indent: -9999999px;
+}
+
+.button-delete:hover {
+	opacity: 0.4;
+}
+
+.button-pdf:hover {
+	opacity: 0.4;
+}
+
+select {
+	width: 200px;
+}
+
+input[value='upload'][type='submit'] {
+	width: 100px;
+}
+
+input[value='search'][type='submit'] {
+	width: 100px;
+	margin-top: 10px;
+}

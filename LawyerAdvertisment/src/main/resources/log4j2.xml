@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<Configuration status="warn">
+	<Properties>
+		<Property name="basePath">/mnt/lawyer-adv-permanent-disk/lawyerAdve/logs</Property>
+		<Property name="logPattern">[%-5level] %d{yyyy-MM-dd HH:mm:ss} %c{1}:%L - %m%n</Property>
+	</Properties>
+
+	<Appenders>
+		<!-- fileName="${basePath}" -->
+		<RollingFile name="LogToFile"
+			fileName="${basePath}/output.log"
+			filePattern="${basePath}/output-%d{yyyy-MM-dd}.log">
+			<PatternLayout pattern="${logPattern}" />
+
+			<Policies>
+				<SizeBasedTriggeringPolicy size="512MB" />
+				<TimeBasedTriggeringPolicy interval="1"
+					modulate="true" />
+			</Policies>
+			<DefaultRolloverStrategy max="10" />
+		</RollingFile>
+	</Appenders>
+
+	<Loggers>
+		<Root level="warn">
+			<AppenderRef ref="LogToFile" />
+		</Root>
+	</Loggers>
+</Configuration>
